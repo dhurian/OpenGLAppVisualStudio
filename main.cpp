@@ -1,6 +1,8 @@
-#define GL_SILENCE_DEPRECATION
+
+#include "/Users/dhurianvitoldas/Documents/Development/CheckOpenGL/OpenGLAppVisualStudio/include/glad/gl.h"
 #include <OpenGL/gl3.h>
 #include <GLFW/glfw3.h>
+
 #include <iostream>
 
 int main() {
@@ -23,7 +25,14 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
-    std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+        // Initialize GLAD (must be done after making the context current)
+    if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialize GLAD\n";
+        glfwTerminate();
+        return -1;
+    }
+    std::cout << "OpenGL version: " << glad_glGetString(GL_VERSION) << std::endl;
+    
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
